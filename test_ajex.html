@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Test Page</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+
+<body>
+	<button id="test_button" type="submit">Test Ajex</button>
+	<div id="go_response"></div>
+	<script>
+
+		var RADIX_LOGIN_REQUEST_TYPE = 1;
+
+		$(document).ready(function () {
+
+			$("#test_button").on('click', function () {
+				$.ajax({
+					url: "http://localhost:8080/table",
+					method: "GET",
+					success: function (data) {
+						$("#go_response").html(data);
+					},
+				});
+			});
+
+
+			var rdx_data_packet = {
+				Id: RADIX_LOGIN_REQUEST_TYPE,
+				Uname: "Hasith Dharmarathna",
+				Psw: "123"
+			};
+
+			$.ajax({
+				type: "POST",
+				contentType: 'application/json; charset=utf-8',
+				dataType: 'json',
+				url: "/login",
+				data: JSON.stringify(rdx_data_packet),
+				success: function (result) {
+					console.log(result);
+				},
+				error: function (xhr, status, error) {
+					// error handling
+					alert(error);
+				}
+			});
+
+
+
+
+		});
+	</script>
+</body>
+
+</html>
