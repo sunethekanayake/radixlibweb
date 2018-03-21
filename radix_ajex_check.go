@@ -23,10 +23,12 @@ type RadixBasicResponce struct {
 }
 
 // Load the index.html template.
-var tmpl = template.Must(template.New("tmpl").ParseFiles("test_ajex.html"))
+var tmpl = template.Must(template.New("tmpl").ParseFiles("radix_login.html"))
 
 func main() {
 	InitVariables()
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/", HomePage) // serve / file
 	http.HandleFunc("/login", ClientRadixLoginRequest)
 	var testInc = 0
@@ -50,7 +52,7 @@ func InitVariables() {
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
 
-	if err := tmpl.ExecuteTemplate(w, "test_ajex.html", nil); err != nil {
+	if err := tmpl.ExecuteTemplate(w, "radix_login.html", nil); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
