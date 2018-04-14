@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/jquery-1.12.1.min.js" type="text/javascript"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+        <link href="css/radix_main.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div style="width: 100%;height: 100%;background-color: cornflowerblue">
+            <div class="radix_hcenter" style="width: 400px;height: 200px;top: 40%;background-color: transparent">               
+                <label style="color: white;margin-left: 0px;margin-top: 1px; float: left">Name : </label>
+                <input type="text" name="fname" style="width: 300px;height: 17px;float: right"><br><br>
+                <label style="color: white;margin-left: 0px;margin-top: 1px; float: left">Password : </label>
+                <input type="text" name="fname" style="width: 300px;height: 17px;float: right">     
+            </div>
+        </div>  
+        <script>
+            var RADIX_REQUEST_LOGIN = 1;
+            $(document).ready(function () {
+
+                $("#test_button").on('click', function () {
+                    $.ajax({
+                        url: "http://localhost:8080/table",
+                        method: "GET",
+                        success: function (data) {
+                            $("#go_response").html(data);
+                        },
+                    });
+                });
+
+
+                var rdx_data_packet = {
+                    Id: RADIX_REQUEST_LOGIN,
+                    Uname: "Hasith Dharmarathna",
+                    Psw: "123"
+                };
+
+                $.ajax({
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    url: "/login",
+                    data: JSON.stringify(rdx_data_packet),
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (xhr, status, error) {
+                        // error handling
+                        alert(error);
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

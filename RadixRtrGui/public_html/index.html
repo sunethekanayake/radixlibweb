@@ -9,17 +9,100 @@ and open the template in the editor.
         <title>supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/radix_main.css" rel="stylesheet" type="text/css"/>
+        <script src="js/jquery-1.12.1.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="js/rdx_addbook.js" type="text/javascript"></script>
     </head>
     <body>
-        <div style="width: 100%;height: 100%;background-color: cornflowerblue">
+        <div style="width: 100%;height: 100%;background-color: #245269">
             <div class="radix_hcenter" style="width: 400px;height: 200px;top: 40%;background-color: transparent">               
-                <label style="color: white;margin-left: 0px;margin-top: 1px; float: left">Name : </label>
-                <input type="text" name="fname" style="width: 300px;height: 17px;float: right"><br><br>
-                <label style="color: white;margin-left: 0px;margin-top: 1px; float: left">Password : </label>
-                <input type="text" name="fname" style="width: 300px;height: 17px;float: right">     
+                <button id="rdx_addBook" class='rdx_add_button' style="margin-top:-30px;">Add Book</button>
             </div>
-
         </div>
+
+        <div id="StatusModal" class="modal">
+            <div id="StatusModalContent" class="modal-content" style="width:370px; height:170px; margin: auto; border-radius: 17px; padding: 0px; background: whitesmoke">
+                <div id="StausText" class="">Test</div> 
+                <div id="userStatusModalImage" style="display: inline-block; float: left; margin: 12px;"></div> 
+                <div id="userStatusModalText" style="display: inline-block; width:280px; height:120px;">Hello</div> 
+            </div>
+        </div>      
+
+        <div id="rdxAddBookDbox" class="modal">
+            <div class="modal-content" style=" height: 720px;background-color: #b4cad4;border: #122b40">
+                <span id="rdxAddBookDboxClose" class="close">×</span>
+                <label style="color:darkslategrey; font-size: 20px; margin-left: 128px"> Add Book </label><br><br>
+
+                <label class="drop_down_label"> Title : </label>
+                <input id="rdxAb_title" required type="text" placeholder="Enter the Book Name" class="field_prop"> <br><br>    
+
+                <label class="drop_down_label"> Author : </label>
+                <input id="rdxAb_auther" required type="text" placeholder="Enter the Authur's Name" class="field_prop"> <br><br>    
+
+                <label class="drop_down_label"> Publisher : </label>
+                <input id="rdxAb_publisher" required type="text" placeholder="Enter the Publisher's Name" class="field_prop"> <br><br>    
+
+                <label class="drop_down_label"> Place of Publication : </label>
+                <input id="rdxAb_pofpublish" required type="text" placeholder="Enter the Place of Publication's Name" class="field_prop"> <br><br>    
+
+                <label class="drop_down_label"> Category : </label>
+                <select required name="category" id="rdxAb_category" class="field_prop">
+                    <option value="0">-- Select --</option>
+                    <option value="1">ONE</option>                        
+                    <option value="2">TWO</option>                        
+                    <option value="3">THREE</option>                        
+                </select><br><br>
+
+                <label class="drop_down_label"> Language : </label>
+                <select required name="category" id="rdxAb_language" class="field_prop">
+                    <option value="0">-- Select --</option>
+                    <option value="1">ONE</option>                        
+                    <option value="2">TWO</option>                        
+                    <option value="3">THREE</option>                        
+                </select><br><br>
+
+                <label class="drop_down_label"> ISBN : </label>
+                <input id="rdxAb_isbn" required type="text" placeholder="Enter the ISBN" class="field_prop"> <br><br>    
+
+                <label class="drop_down_label"> Date of Publish : </label>
+                <input id="rdxAb_dopublish" required type="date" placeholder="Enter the Date of Publish" class="field_prop"> <br><br>    
+
+                <label class="drop_down_label"> Pages : </label>
+                <input id="rdxAb_pages" required type="number" placeholder="Enter the Page Number" class="field_prop"> <br><br>    
+
+                <label class="drop_down_label"> Price : </label>
+                <input id="rdxAb_price" required type="number" placeholder="Enter the Page Number" class="field_prop"> <br><br>    
+
+                <label class="drop_down_label"> Genre : </label>
+                <select required name="category" id="rdxAb_genre" class="field_prop">
+                    <option value="0">-- Select --</option>
+                    <option value="1">ONE</option>                        
+                    <option value="2">TWO</option>                        
+                    <option value="3">THREE</option>                        
+                </select><br><br>
+
+                <label class="drop_down_label"> Format : </label>
+                <select required name="category" id="rdxAb_format" class="field_prop">
+                    <option value="0">-- Select --</option>
+                    <option value="1">ONE</option>                        
+                    <option value="2">TWO</option>                        
+                    <option value="3">THREE</option>                        
+                </select><br><br>
+
+                <label class="drop_down_label"> Remarks : </label>
+                <input id="rdxAb_price" required type="text" placeholder="Enter Remarks" class="field_prop"> <br><br>    
+
+                <br>
+                <button id="rdxAb_addButton" class='rdx_add_button' style="margin-top:-30px;">Add Book</button>
+            </div>
+        </div>     
+
+        <script>
+            init_add_book_window();
+        </script>
     </body>
 </html>
