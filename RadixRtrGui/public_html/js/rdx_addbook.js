@@ -16,6 +16,15 @@ var init_add_book_window = function () {
             Authur: $('#rdxAb_auther').val(),
             Publisher: $('#rdxAb_publisher').val(),
             Popub: $('#rdxAb_pofpublish').val(),
+            Catogory: $('#rdxAb_category').val(),
+            Language: $('#rdxAb_language').val(),
+            ISBN: $('#rdxAb_isbn').val(),
+            Dop: $('#rdxAb_dopublish').val(),
+            Pages: $('#rdxAb_pages').val(),
+            Price: $('#rdxAb_price').val(),
+            Genre: $('#rdxAb_genre').val(),
+            Format: $('#rdxAb_format').val(),
+            Remarks: $('#rdxAb_remarks').val(),
         };
 
 
