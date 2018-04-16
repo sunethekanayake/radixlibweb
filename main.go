@@ -20,12 +20,6 @@ func homePage(w http.ResponseWriter, r *http.Request)  {
     http.ServeFile(w, r, "./RadixRtrGui/public_html/index.html")
 }
 
-func addBook(w http.ResponseWriter, r *http.Request){
-
-	fmt.Print("Add Book  !!!!!!!")
-
-}
-
 func main() { 
   fmt.Print("Hello Go Lang  !!!!!!!")
   http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("./RadixRtrGui/public_html/js"))))

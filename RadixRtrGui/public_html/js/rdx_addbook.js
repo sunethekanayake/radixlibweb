@@ -11,7 +11,7 @@
     $('#rdxAb_addButton').click(function () {
 
         var rdx_data_packet = {
-            Id: 1,
+            Id: RADIX_REQUEST_ADD_BOOK,
             Title: $('#rdxAb_title').val(),
             Authur: $('#rdxAb_auther').val(),
             Publisher: $('#rdxAb_publisher').val(),
