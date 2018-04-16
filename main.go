@@ -5,28 +5,32 @@ import (
   "fmt"
 )
 
-func loginPage(resp http.ResponseWriter, req *http.Request)  {
-  if req.Method != "POST" {
-    http.ServeFile(resp, req, "login.html")
+func loginPage(w http.ResponseWriter, r *http.Request)  {
+  if r.Method != "POST" {
+    http.ServeFile(w, r, "login.html")
   }
 
   var username, password string
-  username = req.FormValue("username")
-  password = req.FormValue("password")
+  username = r.FormValue("username")
+  password = r.FormValue("password")
+  fmt.Fprint(w, "Username:", username, " Password:", password, "\n")
+}
 
-  fmt.Fprint(resp, "Username:", username, " Password:", password, "\n")
+func homePage(w http.ResponseWriter, r *http.Request)  {
+    http.ServeFile(w, r, "./RadixRtrGui/public_html/index.html")
+}
 
+func addBook(w http.ResponseWriter, r *http.Request){
 
+	fmt.Print("Add Book  !!!!!!!")
 
 }
 
-func homePage(resp http.ResponseWriter, req *http.Request)  {
-
-    http.ServeFile(resp, req, "index.html")
-}
-
-func main() {
-  http.HandleFunc("/login", loginPage)
+func main() { 
+  fmt.Print("Hello Go Lang  !!!!!!!")
+  http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("./RadixRtrGui/public_html/js"))))
   http.HandleFunc("/", homePage)
+  http.HandleFunc("/login", loginPage)
+  http.HandleFunc("/addbook", addBook)
   http.ListenAndServe(":8080", nil)
 }
