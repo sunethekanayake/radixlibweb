@@ -4,8 +4,9 @@ import (
 	"net/http"
 	  "fmt"
 	  "encoding/json"
-	  "database/sql"
 	  _ "github.com/mattn/go-sqlite3"
+	  "strconv"
+	  "time"
 )
 
 type BookData struct {
@@ -26,48 +27,75 @@ Remarks    string
 
 };
 
-var count = 0 
-var db *sql.DB
+var count int64 = 10 
+
 func addBook(w http.ResponseWriter, r *http.Request){
 	fmt.Print("book_controller:addBook")
+
+	if err := db.Ping(); err != nil {
+		fmt.Print("book_controller:addBook ERROR::DB closed")
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+  	}
+
 	var book BookData
 	err := json.NewDecoder(r.Body).Decode(&book)
 	fmt.Print("Testing %+v\n",book)
 
-	//fmt.Print("Testing %+v\n", getDBTableCreationString())
+	//fmt.Print("Testing %+v\n", getDBTableCreationString())	
 	
 	if err != nil {
-		fmt.Println("ERROR::HTTP JSON Decode Failed")
+		fmt.Println("book_controller:addBook ERROR::HTTP JSON decode failed")
 		http.Error(w, err.Error(), 400)
 		return
 	}
 
-	db, _ = sql.Open("sqlite3", "radixlib.db")
+	fmt.Println("book_controller:addBook DB is open")
+	nextIndex := getMaxBookIndex() + 1
+	bookId := book.Title + "_" + strconv.Itoa(nextIndex)
 
-	fmt.Print("Hello >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-
-	if err := db.Ping(); err != nil {
-		fmt.Print("Hello Go Language 123 dfasfsdafasdfda !!!!!!!")
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	fmt.Println("ERROR::DB is Open")
-
-	count = count + 1
+	t := time.Now()
+	formattedTime := t.Format(time.RFC3339)
+	
 	_, err = db.Exec("insert into book (bookindex, id, dateofentry, author, title, language, level, publisher, placeofpublication, dateofpublication, pages, price, source, isbn, genre, booktype, format, remarks, numofcopies, ischeckedout) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-						count, book.Id, "doe", book.Authur, book.Title, 1, 1, book.Publisher, book.Popub, book.Dop, 100, book.Price, "source", book.ISBN, 1, "booktype", 1, "remark", count, 1)
+	nextIndex, bookId, formattedTime , book.Authur, book.Title, 1, 1, book.Publisher, book.Popub, book.Dop, 100, book.Price, "source", book.ISBN, 1, "booktype", 1, "remark", count, 0)
 
 	if err!= nil {
-		fmt.Print("DB Error")
+		fmt.Println("book_controller:addBook ERROR::DB Error")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	fmt.Print("DB Inserted")
+	fmt.Println("book_controller:addBook DB insetion successful")
 
 }
 
+func getMaxBookIndex() int{
+	if err := db.Ping(); err != nil {
+		fmt.Println("book_controller:getMaxBookIndex ERROR::DB closed")
+		return -1
+	}
+
+	var maxIndex int = -1
+	err := db.QueryRow("select max(bookindex) from book;").Scan(&maxIndex)
+
+	if err!= nil {
+		fmt.Println("book_controller:addgetMaxBookIndexBook ERROR::DB closed")
+		return -1
+	}
+
+	fmt.Println("book_controller:getMaxBookIndex maxIndex=%d", maxIndex)
+	return maxIndex  
+
+}
+
+func isDBConnected() bool{
+	if err := db.Ping(); err != nil {
+		fmt.Println("book_controller:addBook ERROR::DB closed")
+		return false
+	  }
+	  return true
+}
 func getDBTableCreationString() string{
 	return  "   CREATE TABLE  checkouts (                                                  " +
 			"	userindex            int    ,                                               " +

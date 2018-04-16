@@ -3,7 +3,12 @@ package main
 import (
 	"net/http"
   "fmt"
+  
+  "database/sql"
+  _ "github.com/mattn/go-sqlite3"
 )
+
+var db *sql.DB
 
 func loginPage(w http.ResponseWriter, r *http.Request)  {
   if r.Method != "POST" {
@@ -22,6 +27,15 @@ func homePage(w http.ResponseWriter, r *http.Request)  {
 
 func main() { 
   fmt.Print("Hello Go Lang  !!!!!!!")
+  db, _ = sql.Open("sqlite3", "radixlib.db")
+
+	fmt.Print("Hello >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+
+	if err := db.Ping(); err != nil {
+		fmt.Print("Hello Go Language 123 dfasfsdafasdfda !!!!!!!")
+		return
+  }
+  
   http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("./RadixRtrGui/public_html/js"))))
   http.HandleFunc("/", homePage)
   http.HandleFunc("/login", loginPage)
